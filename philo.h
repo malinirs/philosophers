@@ -5,48 +5,52 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awoods <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/19 12:51:00 by awoods            #+#    #+#             */
-/*   Updated: 2021/08/19 12:51:02 by awoods           ###   ########.fr       */
+/*   Created: 2021/08/23 22:29:45 by awoods            #+#    #+#             */
+/*   Updated: 2021/08/23 22:29:48 by awoods           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-
 # include <unistd.h>
 # include <pthread.h>
 # include <stdlib.h>
 # include <sys/time.h>
-
-#include <stdio.h>
-
+# include <stdio.h>
 
 typedef struct s_table
 {
-	int	philo;
-	int	time_life; //общее время до смерти
-	int	time_eat;
-	int	time_sleep;
-	int	eat; //кол-во приемов еды
+	int				philo;
+	int				time_life;
+	int				time_eat;
+	int				time_sleep;
+	int				eat;
 
-	int	count_eat; //счетчик для кол-ва приемов пищи
-	pthread_mutex_t	sms; //на сообщение
-	pthread_mutex_t	death; //на смерть
-	pthread_t		thread_death; // поток для мониторинга смерти
-	unsigned long	time_start; // время начала симуляции
+	int				count_eat;
+	pthread_mutex_t	sms;
+	pthread_mutex_t	death;
+	pthread_t		thread_death;
+	unsigned long	time_start;
 }			t_table;
 
 typedef struct s_philo
 {
-	pthread_mutex_t	*left; //на левую вилку
-	pthread_mutex_t	right; //на правую вилку
-	pthread_t 		thread_phil; //поток на философов
-	int				index_phil; //индекс философа
-	int				i_eat; //счетчик кол-ва приемов пищи на 1 фила
-	unsigned long	eat_start; // время начала приема пищи
-	t_table	*tabl;
+	pthread_mutex_t	*left;
+	pthread_mutex_t	right;
+	pthread_t		thread_phil;
+	int				index_phil;
+	int				i_eat;
+	unsigned long	eat_start;
+	t_table			*tabl;
 }			t_philo;
 
-int	ft_atoi(const char *str);
+void			ft_trouble(int number);
+void			init(t_table *table, int count);
+void			create_pthread(t_philo **phil, t_table *table);
+unsigned long	get_time(void);
+void			touch_fork(t_philo *philo);
+void			*send_sms(t_philo *philo, char *str);
+void			usleep_mod(unsigned long time);
+void			break_down(t_philo **phil);
 
 #endif

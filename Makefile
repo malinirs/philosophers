@@ -1,8 +1,10 @@
 NAME = philo
 HEADER	= philo.h
 
-SRCS = philo.c \
-		utils.c
+SRCS	=	philo.c \
+			checker.c \
+			init.c \
+			touch_fork.c
 
 OBJS = $(SRCS:.c=.o)
 
